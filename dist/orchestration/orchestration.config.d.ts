@@ -1,0 +1,25 @@
+import { ConfigService } from "@nestjs/config";
+export declare function getOrchestrationConfig(config: ConfigService): {
+    useFargateSpot: boolean;
+    enableFargateFallback: boolean;
+    minTasks: number;
+    maxTasks: number;
+    cpuTargetPercent: number;
+    defaultCpu: number;
+    defaultMemory: number;
+    largeCpu: number;
+    largeMemory: number;
+    healthcheckGraceSeconds: number;
+    defaultHealthCheckPath: string;
+    allowHealthcheckFallback: boolean;
+    rollbackStabilityTimeoutSeconds: number;
+    serviceStabilityTimeoutSeconds: number;
+    serviceStabilityPollIntervalSeconds: number;
+    albHealthTimeoutSeconds: number;
+    albHealthPollIntervalSeconds: number;
+    spotEventWebhookSecret: string;
+    enableEventBridgeSpotRule: boolean;
+    enableAutoRollback: boolean;
+    spotRecoveryCooldownSeconds: number;
+    containerInsights: boolean;
+};

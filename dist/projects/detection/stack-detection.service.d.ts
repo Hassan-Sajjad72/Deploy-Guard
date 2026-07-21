@@ -1,0 +1,46 @@
+import { TemplateMatchingService } from "./template-matching.service";
+export type DeploymentProfileDraft = {
+    commitSha: string | null;
+    ecosystem: string;
+    language: string | null;
+    framework: string | null;
+    frameworkVariant: string | null;
+    packageManager: string | null;
+    runtimeVersion: string | null;
+    buildCommand: string | null;
+    startCommand: string | null;
+    expectedPort: number | null;
+    healthCheckPath: string | null;
+    requiresDatabase: boolean;
+    databaseType: string | null;
+    requiresPersistentStorage: boolean;
+    staticOutput: boolean;
+    dockerfileRequired: boolean;
+    hasDockerfile: boolean;
+    selectedTemplate: string | null;
+    confidence: string;
+    detectionStatus: string;
+    warnings: string[];
+    errors: string[];
+    rawProfile: Record<string, unknown>;
+};
+export declare class StackDetectionService {
+    private readonly templateMatchingService;
+    constructor(templateMatchingService: TemplateMatchingService);
+    detect(workspacePath: string, commitSha: string | null): DeploymentProfileDraft;
+    private detectNode;
+    private detectPython;
+    private detectRuby;
+    private baseProfile;
+    private readJson;
+    private readOptionalText;
+    private readOptionalFile;
+    private extractPortFromScripts;
+    private hasExpressHealthRoute;
+    private detectDjangoProjectName;
+    private readDjangoSettings;
+    private detectNodeDatabase;
+    private detectPersistentStorage;
+    private detectPythonPersistentStorage;
+    private hasSqliteUsage;
+}

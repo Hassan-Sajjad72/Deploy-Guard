@@ -1,0 +1,21 @@
+export type DevOpsTemplateDefinition = {
+    templateKey: string;
+    ecosystem: string;
+    framework: string;
+    frameworkVariant: string;
+    displayName: string;
+    description: string;
+    baseImage: string;
+    runtimeImage: string;
+    usesMultiStageBuild: boolean;
+    securityLevel: string;
+    defaultPort: number;
+    requiredFiles: string[];
+    requiredCommands: string[];
+    outputMode: string;
+    supportedPackageManagers: string[];
+    dockerfileTemplatePath: string | null;
+    notes: string[];
+    warnings: string[];
+};
+export declare const DEVOPS_TEMPLATES: DevOpsTemplateDefinition[];

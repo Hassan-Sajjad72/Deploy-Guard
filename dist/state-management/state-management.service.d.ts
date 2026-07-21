@@ -1,0 +1,58 @@
+import { Repository } from "typeorm";
+import { AuditLogService } from "../audit-log/audit-log.service";
+import { Project } from "../projects/project.entity";
+import { User } from "../users/user.entity";
+import { ProjectDeploymentQueueItem } from "./project-deployment-queue-item.entity";
+import { ProjectStateRecoveryRequest } from "./project-state-recovery-request.entity";
+import { ProjectStateValidationResult } from "./project-state-validation-result.entity";
+import { ProjectTerraformLock } from "./project-terraform-lock.entity";
+import { ProjectTerraformState } from "./project-terraform-state.entity";
+import { StateCorruptionService } from "./state-corruption.service";
+import { StateLockService } from "./state-lock.service";
+import { StateRecoveryService } from "./state-recovery.service";
+import { TerraformStateService } from "./terraform-state.service";
+export declare class StateManagementService {
+    private readonly projectRepository;
+    private readonly stateRepository;
+    private readonly lockRepository;
+    private readonly queueRepository;
+    private readonly validationRepository;
+    private readonly recoveryRepository;
+    private readonly terraformStateService;
+    private readonly lockService;
+    private readonly corruptionService;
+    private readonly recoveryService;
+    private readonly auditLogService;
+    constructor(projectRepository: Repository<Project>, stateRepository: Repository<ProjectTerraformState>, lockRepository: Repository<ProjectTerraformLock>, queueRepository: Repository<ProjectDeploymentQueueItem>, validationRepository: Repository<ProjectStateValidationResult>, recoveryRepository: Repository<ProjectStateRecoveryRequest>, terraformStateService: TerraformStateService, lockService: StateLockService, corruptionService: StateCorruptionService, recoveryService: StateRecoveryService, auditLogService: AuditLogService);
+    getState(user: User, projectId: string): Promise<{
+        id: string;
+        projectId: string;
+        environmentName: string;
+        stateBucket: string;
+        stateKey: string;
+        stateRegion: string;
+        currentVersionId: string;
+        previousVersionId: string;
+        checksum: string;
+        resourceCount: number;
+        dependencyGraphHash: string;
+        status: string;
+        lastValidatedAt: Date;
+        createdAt: Date;
+        updatedAt: Date;
+    }>;
+    getVersions(user: User, projectId: string): Promise<unknown[]>;
+    getLocks(user: User, projectId: string): Promise<{
+        lock: ProjectTerraformLock;
+        queue: ProjectDeploymentQueueItem[];
+    }>;
+    getValidationResults(user: User, projectId: string): Promise<ProjectStateValidationResult[]>;
+    validate(user: User, projectId: string): Promise<ProjectStateValidationResult>;
+    recover(user: User, projectId: string, dto: Record<string, unknown>): Promise<ProjectStateRecoveryRequest>;
+    forceRelease(user: User, projectId: string, lockId: string): Promise<ProjectTerraformLock>;
+    recoveryRequests(user: User, projectId: string): Promise<ProjectStateRecoveryRequest[]>;
+    private findProjectForView;
+    private findProjectForManage;
+    private audit;
+    private toStateResponse;
+}
