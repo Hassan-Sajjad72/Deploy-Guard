@@ -9,7 +9,6 @@ import EmptyState from "../components/common/EmptyState.jsx";
 import ErrorState from "../components/common/ErrorState.jsx";
 import LoadingState from "../components/common/LoadingState.jsx";
 import SecurityPolicyDecisionBadge from "../components/security/SecurityPolicyDecisionBadge.jsx";
-
 function formatDate(value) {
   return value
     ? new Intl.DateTimeFormat(undefined, {
